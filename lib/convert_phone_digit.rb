@@ -13,8 +13,8 @@ class ConvertPhoneDigit
 
   def get_character
     @keypad = {
-    	"0" => ["0"],
-    	"1" => ["1"],
+      "0" => ["0"],
+      "1" => ["1"],
       "2" => ['A','B','C'],
       "3" => ['D','E','F'],
       "4" => ['G','H','I'],
@@ -36,22 +36,22 @@ class ConvertPhoneDigit
   end
 
   def mapping_value(a,b)
-		r = []
-		a.each do |a_e|
-			r += b.map{|b_e| "#{a_e}#{b_e}" }
-		end
+    r = []
+    a.each do |a_e|
+      r += b.map{|b_e| "#{a_e}#{b_e}" }
+    end
 
-		r
-	end
+    r
+  end
 
-	def loop_data(key_characters)
-		results = key_characters.shift
+  def loop_data(key_characters)
+    results = key_characters.shift
 
     begin
       while key_characters.length != 0
-				results = mapping_value(results, key_characters[0])
-				key_characters.shift
-			end
+        results = mapping_value(results, key_characters[0])
+        key_characters.shift
+      end
     rescue TypeError
       return "The number you have entered is not a valid number. Please try again."
     end
@@ -61,14 +61,13 @@ class ConvertPhoneDigit
     puts(results)
     puts "---------------------------------------------------"
     puts("Total: #{results.count}")
-	end
+  end
 
   def get_key_combinations(number)
     validate_number(number)
     number_array = number.split("")
 
     key_characters = number_array.map{|n| @keypad[n]}
-    results = key_characters.shift
 
     loop_data(key_characters)
   end
