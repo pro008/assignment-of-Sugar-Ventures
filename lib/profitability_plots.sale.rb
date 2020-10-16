@@ -93,6 +93,7 @@ class ProfittabilityPlotsSale
       else
         if result.last[:value] >= 0
           result.last[:value] += arr[index][:value]
+          result.last[:range][1] = arr[index][:range][1]
         else
           result << arr[index]
         end
@@ -110,15 +111,13 @@ class ProfittabilityPlotsSale
 
     arr.each_slice(2) do |loss, profit|
       results << loss and break if profit.nil?
-      if profit[:value] >= loss[:value].abs && results.last[:value] > 0
-        if results.length == 1 && loss[:value].abs > results.last[:value]
-          results  = [profit]
-        else
+
+      if profit[:value] > loss[:value].abs && results.last[:value] > loss[:value].abs
           results.last[:value] += loss[:value] + profit[:value]
           results.last[:range][1] = profit[:range][1]
-        end
       else
-        results << loss and results << profit
+        results << loss
+        results << profit
       end          
     end
 
